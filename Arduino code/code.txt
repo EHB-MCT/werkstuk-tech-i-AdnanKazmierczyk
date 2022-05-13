@@ -1,0 +1,43 @@
+// Include the servo library:
+#include <Servo.h>
+
+// Create a new servo object:
+Servo myservo;
+
+// Define the servo pin:
+#define servoPin 9
+
+// Create a variable to store the servo position:
+int angle = 0;
+
+int buttonState = 0;
+
+// Create a variable
+const int buttonPin = 2;
+const int ledPin1 =  3;
+
+void setup() {
+  // Attach the Servo variable to a pin:
+  myservo.attach(servoPin);
+
+  pinMode(buttonPin, INPUT);
+  pinMode(ledPin1, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  buttonState = digitalRead(buttonPin);
+  Serial.println(buttonState);
+
+  if ( buttonState == 0) {
+    digitalWrite(ledPin1, HIGH);
+    delay(4000);
+    // Sweep from 0 to 180 degrees:
+    for (angle = 90; angle <= 270; angle += 1) {
+      myservo.write(angle);
+      delay(25);
+    }
+    delay(2000);
+    digitalWrite(ledPin1, LOW);
+  }
+}
